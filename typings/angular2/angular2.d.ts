@@ -655,6 +655,7 @@ declare module "angular2/angular2" {
   }
   class ProtoViewRef{}
   class ViewContainerRef{
+     length: number;
      create(protoViewRef):ViewRef
      get(index:number): ViewRef
   }
