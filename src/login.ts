@@ -17,17 +17,13 @@ class LocalVariable {
   protoViewRef: ProtoViewRef;
   view: any;
   constructor(viewContainer: ViewContainerRef, protoViewRef: ProtoViewRef) {
-    console.log('hi') this.viewContainer = viewContainer;
+    this.viewContainer = viewContainer;
     this.protoViewRef = protoViewRef;
   }
 
   set localVariable(exp) {
-    console.log('setting localVariable', exp) if (!this.viewContainer.length) {
-      console.log('executed bc no container') this.view =
-          this.viewContainer.create(this.protoViewRef);
-    }
-    else {
-      console.log('view already created');
+    if (!this.viewContainer.length) {
+      this.view = this.viewContainer.create(this.protoViewRef);
     }
 
     this.view.setLocal("$implicit", exp);
