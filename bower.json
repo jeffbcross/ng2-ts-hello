@@ -1,0 +1,21 @@
+{
+  "name": "ng2-projects",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jeffbcross/ng2-ts-hello",
+  "authors": [
+    "Jeff Cross <crossj@google.com>",
+    "Brian Ford <bford@google.com>"
+  ],
+  "main": "public/index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.5"
+  }
+}
