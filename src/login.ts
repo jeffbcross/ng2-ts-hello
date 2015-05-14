@@ -1,30 +1,32 @@
-/// <reference path="typings/angular2/angular2.d.ts" />
-/// <reference path="typings/firebase/firebase.d.ts" />
+/// <reference path="../typings/angular2/angular2.d.ts" />
+/// <reference path="../typings/firebase/firebase.d.ts" />
 
-import {Component, Directive, View, EventEmitter, NgIf, ViewContainerRef, ProtoViewRef} from "angular2/angular2";
+import {
+  Component,
+  Directive,
+  View,
+  EventEmitter,
+  NgIf,
+  ViewContainerRef,
+  ProtoViewRef
+} from "angular2/angular2";
 
-@Directive({
-  selector: '[assign-local]',
-  properties: {
-    'localVariable': 'assignLocalTo'
-  }
-})
+@Directive({selector: '[assign-local]', properties: {'localVariable': 'assignLocalTo'}})
 class LocalVariable {
   viewContainer: ViewContainerRef;
   protoViewRef: ProtoViewRef;
   view: any;
   constructor(viewContainer: ViewContainerRef, protoViewRef: ProtoViewRef) {
-    console.log('hi')
-    this.viewContainer = viewContainer;
+    console.log('hi') this.viewContainer = viewContainer;
     this.protoViewRef = protoViewRef;
   }
 
-  set localVariable (exp) {
-    console.log('setting localVariable', exp)
-    if (!this.viewContainer.length) {
-      console.log('executed bc no container')
-      this.view = this.viewContainer.create(this.protoViewRef);
-    } else {
+  set localVariable(exp) {
+    console.log('setting localVariable', exp) if (!this.viewContainer.length) {
+      console.log('executed bc no container') this.view =
+          this.viewContainer.create(this.protoViewRef);
+    }
+    else {
       console.log('view already created');
     }
 
@@ -32,9 +34,7 @@ class LocalVariable {
   }
 }
 
-@Component({
-	selector: 'gh-login'
-})
+@Component({selector: 'gh-login'})
 @View({
   template: `
     <div>
@@ -48,20 +48,18 @@ class LocalVariable {
       </span>
     </div>
     `,
-    directives: [NgIf,LocalVariable]
+  directives: [NgIf, LocalVariable]
 })
 export class LoginComponent {
   auth: EventEmitter;
   ref: Firebase;
   fullAuth: FirebaseAuthResult;
-	constructor() {
-		this.ref = new Firebase('https://ng2-projects.firebaseio.com');
+  constructor() {
+    this.ref = new Firebase('https://ng2-projects.firebaseio.com');
     var authResult = this.ref.getAuth();
     this.auth = new EventEmitter();
-    setTimeout(() => {
-      this.auth.next(authResult);
-    });
-	}
+    setTimeout(() => { this.auth.next(authResult); });
+  }
 
   login() {
     this.ref.authWithOAuthPopup('github', (e) => {
