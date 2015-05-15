@@ -35,11 +35,11 @@ class LocalVariable {
   template: `
     <div>
       <span *assign-local="#unwrapped to auth | async">
-        <button (click)="login()" *ng-if="!unwrapped">Login</button>
+        <paper-button raised (click)="login()" *ng-if="!unwrapped">Login</paper-button>
         <span *ng-if="unwrapped">
           Welcome, {{unwrapped.github.displayName}}!
           <img [src]="unwrapped.github.cachedUserProfile.avatar_url" width="50" height="50">
-          <button (click)="logout()">Logout</button>
+          <paper-button raised (click)="logout()">Logout</paper-button>
         </span>
       </span>
     </div>
