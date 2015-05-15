@@ -5,7 +5,9 @@ import {LoginComponent} from "./login";
 
 @Component({selector: 'my-app'})
 @View({
-  template: '<div><h1>Hello {{ name }}</h1></div><gh-login></gh-login>',
+  template: `
+    <gh-login></gh-login>
+  `,
   directives: [LoginComponent]
 })
 class MyAppComponent {
