@@ -10,36 +10,22 @@ import {
   ViewContainerRef,
   ProtoViewRef
 } from "angular2/angular2";
+import {LocalVariable} from './components/assign-local-directive/assign-local-directive';
+import {AuthService} from './components/auth-service/auth-service';
 
-@Directive({selector: '[assign-local]', properties: {'localVariable': 'assignLocalTo'}})
-class LocalVariable {
-  viewContainer: ViewContainerRef;
-  protoViewRef: ProtoViewRef;
-  view: any;
-  constructor(viewContainer: ViewContainerRef, protoViewRef: ProtoViewRef) {
-    this.viewContainer = viewContainer;
-    this.protoViewRef = protoViewRef;
-  }
-
-  set localVariable(exp) {
-    if (!this.viewContainer.length) {
-      this.view = this.viewContainer.create(this.protoViewRef);
-    }
-
-    this.view.setLocal("$implicit", exp);
-  }
-}
-
-@Component({selector: 'gh-login'})
+@Component({
+  selector: 'gh-login',
+  injectables: [AuthService]
+})
 @View({
   template: `
     <div>
       <span *assign-local="#unwrapped to auth | async">
-        <paper-button raised (click)="login()" *ng-if="!unwrapped">Login</paper-button>
+        <paper-button raised (click)="authService.login()" *ng-if="!unwrapped">Login</paper-button>
         <span *ng-if="unwrapped">
           Welcome, {{unwrapped.github.displayName}}!
           <img [src]="unwrapped.github.cachedUserProfile.avatar_url" width="50" height="50">
-          <paper-button raised (click)="logout()">Logout</paper-button>
+          <paper-button raised (click)="authService.logout()">Logout</paper-button>
         </span>
       </span>
     </div>
@@ -50,25 +36,9 @@ export class LoginComponent {
   auth: EventEmitter;
   ref: Firebase;
   fullAuth: FirebaseAuthResult;
-  constructor() {
-    this.ref = new Firebase('https://ng2-projects.firebaseio.com');
-    var authResult = this.ref.getAuth();
-    this.auth = new EventEmitter();
-    setTimeout(() => { this.auth.next(authResult); });
-  }
-
-  login() {
-    this.ref.authWithOAuthPopup('github', (e) => {
-      if (!e) {
-        this.auth.next(this.ref.getAuth());
-      } else {
-        this.auth.throw(e);
-      }
-    });
-  }
-
-  logout() {
-    this.ref.unauth();
-    this.auth.next(null);
+  authService: AuthService;
+  constructor(authService:AuthService) {
+    this.authService = authService;
+    this.auth = authService.authObservable;
   }
 }
