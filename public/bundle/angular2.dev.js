@@ -1713,15 +1713,20 @@ function apply() {
   ];
 
   document.registerElement = function (name, opts) {
-    callbacks.forEach(function (callback) {
-      if (opts.prototype[callback]) {
-        var descriptor = Object.getOwnPropertyDescriptor(opts.prototype, callback);
-        if (descriptor.value) {
-          descriptor.value = global.zone.bind(descriptor.value || opts.prototype[callback]);
-          _redefineProperty(opts.prototype, callback, descriptor);
+    if (opts && opts.prototype) {
+      callbacks.forEach(function (callback) {
+        if (opts.prototype.hasOwnProperty(callback)) {
+          var descriptor = Object.getOwnPropertyDescriptor(opts.prototype, callback);
+          if (descriptor.value) {
+            descriptor.value = global.zone.bind(descriptor.value || opts.prototype[callback]);
+            _redefineProperty(opts.prototype, callback, descriptor);
+          }
+        } else if (opts.prototype[callback]) {
+          opts.prototype[callback] = global.zone.bind(opts.prototype[callback]);
         }
-      }
-    });
+      });
+    }
+
     return _registerElement.apply(document, [name, opts]);
   };
 }
@@ -2728,7 +2733,7 @@ var Reflect;
         if (typeof O !== "function" || O === functionPrototype) {
             return proto;
         }
-        // TypeScript doesn't set __proto__ in ES5, as it's non-standard. 
+        // TypeScript doesn't set __proto__ in ES5, as it's non-standard.
         // Try to determine the superclass constructor. Compatible implementations
         // must either set __proto__ on a subclass constructor to the superclass constructor,
         // or ensure each class has a valid `constructor` property on its prototype that
