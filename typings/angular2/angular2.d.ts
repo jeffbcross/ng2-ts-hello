@@ -604,6 +604,7 @@ declare module "angular2/angular2" {
   function NgSwitch(): void;
   var Observable: any;
   class EventEmitter {
+     _subject: any;
      observer(generator): any
      next(value): void
      throw(error): void
@@ -639,12 +640,22 @@ declare module "angular2/angular2" {
   var DirectiveRecord: any;
   var DynamicChangeDetector: any;
   var ChangeDetectorRef: any;
-  var PipeRegistry: any;
+  class PipeRegistry {
+     config: Object;
+  }
   var uninitialized: any;
   var WrappedValue: any;
-  var Pipe: any;
+  class Pipe {
+     supports(obj): boolean;
+     onDestroy();
+     transform(value: any): any;
+  }
   var NullPipe: any;
   var NullPipeFactory: any;
+  class PipeFactory {
+     supports(obj):boolean;
+     create():Pipe;
+  }
   var defaultPipes: any;
   var DynamicChangeDetection: any;
   var JitChangeDetection: any;
