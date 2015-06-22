@@ -1,0 +1,25 @@
+{
+  "name": "http-quickstart",
+  "version": "1.0.0",
+  "description": "Angular 2 Http quickstart",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angular/ts-quickstart.git"
+  },
+  "author": "jeffbcross",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/angular/ts-quickstart/issues"
+  },
+  "homepage": "https://github.com/angular/ts-quickstart#readme",
+  "dependencies": {
+    "angular/angular": "2.0.0-alpha.27",
+    "http2": "^3.2.0",
+    "reflect-metadata": "^0.1.0",
+    "typescript": "^1.5.0-beta"
+  }
+}
